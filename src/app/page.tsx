@@ -6,9 +6,18 @@ import { ChefHat, Utensils, Heart, Sparkles } from "lucide-react";
 export default async function Home({ searchParams }: { searchParams: Promise<{ error?: string }> }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (user) redirect("/chat");
 
   const { error } = await searchParams;
+
+  // 許可されていないユーザーがログイン済みの場合はサインアウト
+  if (user) {
+    const allowedEmails = (process.env.ALLOWED_EMAILS ?? "").split(",").map((e) => e.trim()).filter(Boolean);
+    if (allowedEmails.length > 0 && !allowedEmails.includes(user.email ?? "")) {
+      await supabase.auth.signOut();
+    } else {
+      redirect("/chat");
+    }
+  }
 
   return (
     <main className="flex-1 flex flex-col items-center justify-center px-6 py-12 bg-gradient-to-b from-butter/30 to-cream">
