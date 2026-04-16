@@ -1,14 +1,13 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { MessageCircle, Users, BookOpen, Refrigerator, LogOut } from "lucide-react";
+import { MessageCircle, Users, BookOpen, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
   { href: "/chat", label: "チャット", icon: MessageCircle },
   { href: "/family", label: "家族", icon: Users },
   { href: "/recipes", label: "レシピ", icon: BookOpen },
-  { href: "/fridge", label: "冷蔵庫", icon: Refrigerator },
 ];
 
 export function AppNav() {
