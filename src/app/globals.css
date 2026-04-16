@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #FFF8E7;
+  --foreground: #3D2817;
+
+  --tomato: #E4572E;
+  --tomato-dark: #C13E1A;
+  --basil: #76B041;
+  --basil-dark: #5A8A30;
+  --butter: #FFC43D;
+  --butter-dark: #E8A91E;
+  --cream: #FFF8E7;
+  --cream-dark: #F3E9C6;
+  --warm-brown: #3D2817;
+  --soft-brown: #8B6F47;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-tomato: var(--tomato);
+  --color-tomato-dark: var(--tomato-dark);
+  --color-basil: var(--basil);
+  --color-basil-dark: var(--basil-dark);
+  --color-butter: var(--butter);
+  --color-butter-dark: var(--butter-dark);
+  --color-cream: var(--cream);
+  --color-cream-dark: var(--cream-dark);
+  --color-warm-brown: var(--warm-brown);
+  --color-soft-brown: var(--soft-brown);
+  --font-sans: var(--font-rounded), "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--butter); border-radius: 999px; }
+::-webkit-scrollbar-track { background: transparent; }
+
+@keyframes pop-in {
+  0% { transform: scale(0.6); opacity: 0; }
+  70% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); }
+}
+.animate-pop-in { animation: pop-in 0.35s cubic-bezier(.2,.9,.3,1.3); }
+
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+.animate-bounce-soft { animation: bounce-soft 1.4s ease-in-out infinite; }
