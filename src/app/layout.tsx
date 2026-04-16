@@ -36,9 +36,6 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="ja" className={`${rounded.variable} h-full antialiased`} style={{ backgroundColor: "#FFF8E7" }}>
-      <head>
-        <style dangerouslySetInnerHTML={{ __html: "html,body{background:#FFF8E7!important}" }} />
-      </head>
       <body className="min-h-full flex flex-col bg-cream text-warm-brown" style={{ backgroundColor: "#FFF8E7" }}>
         {/* スプラッシュ画面: hydration 完了後にフェードアウト */}
         <div
