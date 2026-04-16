@@ -13,6 +13,13 @@ export const metadata: Metadata = {
   title: "おうちシェフ",
   description: "家族の好き嫌いを踏まえて、冷蔵庫の食材からレシピを提案するアプリ",
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+  },
   appleWebApp: { capable: true, statusBarStyle: "default", title: "おうちシェフ" },
   robots: { index: false, follow: false },
 };
