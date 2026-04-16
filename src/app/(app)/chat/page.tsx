@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Input";
 import { Card, CardTitle } from "@/components/ui/Card";
 import { ModeSelector } from "@/components/ModeSelector";
-import { VoiceInputButton } from "@/components/VoiceInputButton";
 import type { ChatMessage, Recipe, SuggestionMode } from "@/lib/types";
 
 export default function ChatPage() {
@@ -14,7 +13,7 @@ export default function ChatPage() {
     {
       role: "assistant",
       content:
-        "こんにちは!おうちシェフです 🍳\n今日の冷蔵庫にある食材を教えてください。音声でもテキストでもOKですよ!",
+        "こんにちは!おうちシェフです 🍳\n今日の冷蔵庫にある食材を教えてください!",
     },
   ]);
   const [input, setInput] = useState("");
@@ -119,7 +118,6 @@ export default function ChatPage() {
 
       <div className="px-3 py-3 bg-white border-t-2 border-cream-dark">
         <div className="flex items-end gap-2">
-          <VoiceInputButton onResult={(t) => setInput((v) => (v ? v + " " : "") + t)} />
           <Textarea
             value={input}
             onChange={(e) => setInput(e.target.value)}
