@@ -192,6 +192,20 @@ export default function RecipeDetailPage({ params }: { params: Promise<{ id: str
           </div>
         )}
       </Card>
+
+      <div className="mt-8 mb-4 flex justify-center">
+        <button
+          onClick={async () => {
+            if (!confirm("このレシピを削除しますか？関連する評価もすべて削除されます。")) return;
+            await supabase.from("recipe_feedback").delete().eq("recipe_id", id);
+            await supabase.from("recipes").delete().eq("id", id);
+            router.push("/recipes");
+          }}
+          className="text-sm text-soft-brown/60 hover:text-tomato transition-colors"
+        >
+          このレシピを削除
+        </button>
+      </div>
     </div>
   );
 }
