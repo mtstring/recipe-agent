@@ -43,3 +43,7 @@ next-env.d.ts
 
 # session logs
 .claude-session-log.md
+
+# Claude Code config
+CLAUDE.md
+AGENTS.md
