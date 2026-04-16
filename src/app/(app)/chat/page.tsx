@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import { Send, ImagePlus, Sparkles, Loader2, ChefHat } from "lucide-react";
+import { Send, Sparkles, Loader2, ChefHat } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Input";
@@ -14,14 +14,13 @@ export default function ChatPage() {
     {
       role: "assistant",
       content:
-        "こんにちは!おうちシェフです 🍳\n今日の冷蔵庫にある食材を教えてください。音声や写真でも登録できますよ!",
+        "こんにちは!おうちシェフです 🍳\n今日の冷蔵庫にある食材を教えてください。音声でもテキストでもOKですよ!",
     },
   ]);
   const [input, setInput] = useState("");
   const [mode, setMode] = useState<SuggestionMode>("normal");
   const [loading, setLoading] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -57,27 +56,6 @@ export default function ChatPage() {
         { role: "assistant", content: "ごめんなさい、エラーが発生しました。もう一度試してください。" },
       ]);
     } finally {
-      setLoading(false);
-    }
-  };
-
-  const onPhoto = async (file: File) => {
-    setLoading(true);
-    setMessages((curr) => [...curr, { role: "user", content: "📸 食材の写真を送信しました" }]);
-    try {
-      const fd = new FormData();
-      fd.append("image", file);
-      const res = await fetch("/api/vision", { method: "POST", body: fd });
-      const data = (await res.json()) as { items: { name: string; amount?: string | null }[] };
-      if (!data.items?.length) {
-        setMessages((curr) => [...curr, { role: "assistant", content: "写真から食材を読み取れませんでした。テキストで教えてもらえますか?" }]);
-        setLoading(false);
-        return;
-      }
-      const list = data.items.map((i) => `${i.name}${i.amount ? ` (${i.amount})` : ""}`).join(", ");
-      await send(`冷蔵庫には ${list} があります。`);
-    } catch {
-      setMessages((curr) => [...curr, { role: "assistant", content: "写真の解析に失敗しました。" }]);
       setLoading(false);
     }
   };
@@ -141,22 +119,6 @@ export default function ChatPage() {
 
       <div className="px-3 py-3 bg-white border-t-2 border-cream-dark">
         <div className="flex items-end gap-2">
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            capture="environment"
-            className="hidden"
-            onChange={(e) => e.target.files?.[0] && onPhoto(e.target.files[0])}
-          />
-          <button
-            type="button"
-            onClick={() => fileRef.current?.click()}
-            aria-label="写真で登録"
-            className="w-11 h-11 rounded-full bg-basil text-white flex items-center justify-center shadow hover:bg-basil-dark"
-          >
-            <ImagePlus className="w-5 h-5" />
-          </button>
           <VoiceInputButton onResult={(t) => setInput((v) => (v ? v + " " : "") + t)} />
           <Textarea
             value={input}
