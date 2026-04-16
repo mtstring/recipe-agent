@@ -89,7 +89,8 @@ export default function RootLayout({
                   var el = document.getElementById('splash');
                   if(!el) return;
                   el.style.opacity = '0';
-                  setTimeout(function(){ el.remove(); }, 400);
+                  el.style.pointerEvents = 'none';
+                  setTimeout(function(){ el.style.display = 'none'; }, 400);
                 }
                 if(document.readyState === 'complete') hide();
                 else window.addEventListener('load', hide);
