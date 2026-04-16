@@ -37,6 +37,67 @@ export default function RootLayout({
   return (
     <html lang="ja" className={`${rounded.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-cream text-warm-brown">
+        {/* スプラッシュ画面: hydration 完了後にフェードアウト */}
+        <div
+          id="splash"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "linear-gradient(to bottom, rgba(255,196,61,0.3), #FFF8E7)",
+            transition: "opacity 0.4s ease",
+          }}
+        >
+          <img
+            src="/icon-192.png"
+            alt=""
+            width={96}
+            height={96}
+            style={{ borderRadius: 24, marginBottom: 16, boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
+          />
+          <p style={{ fontSize: 24, fontWeight: 800, color: "#E4572E", margin: "0 0 8px" }}>
+            おうちシェフ
+          </p>
+          <div
+            style={{
+              width: 32,
+              height: 32,
+              border: "3px solid #F3E9C6",
+              borderTopColor: "#E4572E",
+              borderRadius: "50%",
+              animation: "splash-spin 0.8s linear infinite",
+            }}
+          />
+          <style
+            dangerouslySetInnerHTML={{
+              __html: "@keyframes splash-spin{to{transform:rotate(360deg)}}",
+            }}
+          />
+        </div>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(){
+                var done = false;
+                function hide(){
+                  if(done) return;
+                  done = true;
+                  var el = document.getElementById('splash');
+                  if(!el) return;
+                  el.style.opacity = '0';
+                  setTimeout(function(){ el.remove(); }, 400);
+                }
+                if(document.readyState === 'complete') hide();
+                else window.addEventListener('load', hide);
+                setTimeout(hide, 5000);
+              })();
+            `,
+          }}
+        />
         {children}
       </body>
     </html>
